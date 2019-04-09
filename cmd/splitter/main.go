@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -34,9 +35,32 @@ func check(err error) {
 	}
 }
 
+func file_exists(fname string) bool {
+	if _, err := os.Stat(fname); os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
 func main() {
-	target_file := "/Users/j.ferrara/PersCode/reddit_classification/data/sample_100k.json"
-	output_folder := "/Users/j.ferrara/PersCode/reddit_classification/data/subreddits/"
+	if len(os.Args) < 3 {
+		fmt.Printf("Use this program as such: splitter input_file output_folder")
+		os.Exit(-1)
+	}
+	target_file := os.Args[1]
+	output_folder := os.Args[2]
+	if !file_exists(target_file) {
+		fmt.Printf("Target file does not exist.")
+		os.Exit(-1)
+	}
+	if !file_exists(output_folder) {
+		fmt.Printf("Output folder does not exist.")
+		os.Exit(-1)
+	}
+
+	// target_file := "/Users/j.ferrara/PersCode/reddit_classification/data/sample_100k.json"
+	// output_folder := "/Users/j.ferrara/PersCode/reddit_classification/data/subreddits/"
+
 	outFileMap := make(map[string]*bufio.Writer)
 	file, err := os.Open(target_file)
 	if err != nil {
