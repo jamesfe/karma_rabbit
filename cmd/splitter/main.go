@@ -43,6 +43,7 @@ func file_exists(fname string) bool {
 }
 
 func main() {
+	// TODO: Refactor to another function
 	if len(os.Args) < 3 {
 		fmt.Printf("Use this program as such: splitter input_file output_folder")
 		os.Exit(-1)
@@ -61,6 +62,7 @@ func main() {
 	// target_file := "/Users/j.ferrara/PersCode/reddit_classification/data/sample_100k.json"
 	// output_folder := "/Users/j.ferrara/PersCode/reddit_classification/data/subreddits/"
 
+	// TODO: Make this load a Comment
 	outFileMap := make(map[string]*bufio.Writer)
 	file, err := os.Open(target_file)
 	if err != nil {
